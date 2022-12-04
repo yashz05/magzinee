@@ -15,13 +15,15 @@
             integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+    @livewire('livewire-toast')
     <!-- Styles -->
     @livewireStyles
+
 </head>
 <body class="">
 
 <div class="min-h-full">
+
     <div class="bg-gray-800 pb-32 ">
         <nav class="bg-gray-800">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

@@ -8,7 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class posts extends Model
 {
     use HasFactory;
+
+    protected $casts = [
+        'tags' => 'json'
+    ];
     protected $fillable = [
-        'title','content','short_content','category','featured_image','published','tags','slug'
+        'title', 'content', 'short_content', 'category', 'featured_image', 'published', 'tags', 'slug'
     ];
 }

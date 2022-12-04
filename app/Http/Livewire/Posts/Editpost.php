@@ -8,7 +8,9 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class Editpost extends Component
-{   public $title;
+{
+    public $idf;
+    public $title;
     public $slug;
     public $content;
     public $categorieslist;
@@ -23,7 +25,7 @@ class Editpost extends Component
         'title' => 'required|min:6',
         'content' => 'required',
         'shortd' => 'required',
-        'postimg' => 'image'
+
 
     ];
 
@@ -39,6 +41,19 @@ class Editpost extends Component
     }
     public function mount()
     {
+        $data =  posts::where('id',$this->idf)->first();
+        if($data == null){
+              abort(404, "The Partner was not found");
+        }else{
+            $this->title = $data->title;
+            $this->slug=$data->slug;
+            $this->content = $data->content;
+            $this->category=$data->category;
+            $this->selectedtags = $data->tags;
+            $this->shortd = $data->short_content;
+
+
+        }
         $this->categorieslist = post_categories::where('enabled',
             true)->get();
     }
@@ -63,22 +78,39 @@ class Editpost extends Component
 
     }
 
-    public function create_blog()
+    public function update_post()
     {
-        $this->validate();
-        $filename = explode('.', str_replace(' ', '_', $this->postimg->getClientOriginalName()))[0] . rand(1, 199999) . time() . '.' . $this->postimg->getClientOriginalExtension();
-        $this->postimg->storeAs('images/posts/' . date('Y'), $filename, 'public');
-        posts::create([
-            'title' => $this->title,
-            'content' => $this->content,
-            'short_content' => $this->shortd,
-            'category' => $this->category,
-            'featured_image' => $filename,
-            'published' => 0,
-            'tags' => json_encode($this->selectedtags),
-            'slug' => $this->slug
-        ]);
-        return $this->redirect(route('post.edit'));
+
+
+   $this->validate();
+        if($this->postimg != null){
+            $filename = explode('.', str_replace(' ', '_', $this->postimg->getClientOriginalName()))[0] . rand(1, 199999) . time() . '.' . $this->postimg->getClientOriginalExtension();
+            $this->postimg->storeAs('images/posts/' . date('Y'), $filename, 'public');
+            posts::where('id',$this->idf)->update([
+                'title' => $this->title,
+                'content' => $this->content,
+                'short_content' => $this->shortd,
+                'category' => $this->category,
+                'featured_image' => $filename,
+                'published' => 0,
+                'tags' => json_encode($this->selectedtags),
+                'slug' => $this->slug
+            ]);
+        }else{
+            posts::where('id',$this->idf)->update([
+                'title' => $this->title,
+                'content' => $this->content,
+                'short_content' => $this->shortd,
+                'category' => $this->category,
+
+                'published' => 0,
+                'tags' => json_encode($this->selectedtags),
+                'slug' => $this->slug
+            ]);
+        }
+
+
+        //        return $this->redirect(route('post.edit'));
     }
 
 }

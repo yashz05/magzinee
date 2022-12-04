@@ -26,8 +26,8 @@ Route::prefix('admin')->middleware(['auth:sanctum', config('jetstream.auth_sessi
         Route::get('/posts/new', function () {
             return view('Posts.newposts');
         })->name('new.posts');
-        Route::get('/posts/edit/{id}', function () {
-            return view('Posts.editposts');
+        Route::get('/posts/edit/{id}', function (\Illuminate\Http\Request $request) {
+            return view('Posts.editposts',['id'=>$request->id]);
         })->name('post.edit');
 
     });
