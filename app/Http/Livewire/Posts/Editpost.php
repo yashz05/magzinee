@@ -10,6 +10,7 @@ use Livewire\WithFileUploads;
 class Editpost extends Component
 {
     public $idf;
+    public $t = false;
     public $title;
     public $slug;
     public $content;
@@ -108,6 +109,7 @@ class Editpost extends Component
                 'slug' => $this->slug
             ]);
         }
+            $this->emit('toast', "Post Updated");
 
 
         //        return $this->redirect(route('post.edit'));

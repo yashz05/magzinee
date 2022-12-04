@@ -15,7 +15,7 @@
             integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @livewire('livewire-toast')
+
     <!-- Styles -->
     @livewireStyles
 
@@ -176,8 +176,13 @@
                 </div>
             </div>
         </nav>
+
+        <x-ui.toast >
+
+        </x-ui.toast>
         @if(request()->is('admin/posts/*'))
         @else
+
             <header class="py-10">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <h1 class="text-3xl font-bold text-white">
